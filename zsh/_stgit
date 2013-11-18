@@ -1,0 +1,64 @@
+#compdef stg
+
+typeset -a subcmds
+
+subcmds=( ${${${(M)${(f)"$(stg help 2> /dev/null)"}## *}#  }/#(#b)([^[:space:]]##)[[:space:]]##(*)/$match[1]:$match[2]} )
+
+local curcontext="$curcontext"
+local subcmd
+local ret=1
+
+if (( CURRENT == 2 )); then
+  _describe -t commands 'stgit command' subcmds && ret=0
+else
+  shift words
+  (( CURRENT-- ))
+  subcmd="$words[1]"
+  curcontext="${curcontext%:*}-${subcmd}:"
+
+  case $subcmd in
+    (push)
+      _wanted -V "unapplied patches" expl "patch" \
+        compadd ${${(M)${(f)"$(stg series 2> /dev/null)"}##- *}#- } \
+                && ret=0
+    ;;
+    (pop)
+      _wanted -V "applied patches" expl "patch" \
+        compadd ${${(M)${(f)"$(stg series 2> /dev/null)"}##[+>] *}#[+>] } \
+                && ret=0
+    ;;
+    (edit|files|goto|rename|log|float|delete|sink|mail|sync|show|pick|hide)
+      _wanted -V "patches" expl "patch" \
+        compadd $(stg series --noprefix > /dev/null) \
+                && ret=0
+    ;;
+    (unhide)
+      _wanted -V "hidden patches" expl "patch" \
+        compadd $(stg series --noprefix -H) && ret=0
+    ;;
+    (branch)
+      _wanted -V "branches" expl "branch" \
+        compadd $(stg branch --list | cut -f2 | cut -d' ' -f1) && ret=0
+    ;;
+    (rebase)
+      _wanted -V "branches" expl "branch" \
+        compadd $(git branch -a | sed 's/..//') && ret=0
+    ;;
+    (refresh)
+      if (( CURRENT > 2 )); then
+        if [[ "$words[$(( CURRENT - 1 ))]" = "-p" ]]; then
+          _wanted -V "patches" expl "patch" \
+            compadd $(stg series --noprefix) && ret=0
+        fi
+      fi
+
+      (( ret == 0 )) || _wanted -V "dirty files" expl "files" \
+        compadd $(stg status | cut -d' ' -f2) && ret=0
+    ;;
+    (*)
+      _files
+    ;;
+  esac
+fi
+
+return ret

@@ -1,0 +1,34 @@
+[ui]
+username = Piotr Kalinowski <pitkali@gmail.com>
+ignore = ~/.my-config/hg/ignore
+
+[extensions]
+mq =
+progress =
+record =
+shelve =
+rebase =
+color =
+pager =
+
+graphlog =
+purge =
+relink =
+transplant =
+histedit =
+
+schemes =
+convert =
+
+hggit = ~/.my-config/lib/hg-git/hggit
+guestrepo = ~/.my-config/lib/guestrepo/guestrepo
+
+[web]
+cacerts = ~/.my-config/hg/dummycert.pem
+
+[color]
+qseries.applied = green bold
+qseries.unapplied = magenta bold
+
+[schemes]
+gh = git+https://github.com/

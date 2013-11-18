@@ -1,0 +1,7 @@
+emacs = ssh://hg@bitbucket.org/pitkali/emacs-config
+vim = ssh://hg@bitbucket.org/pitkali/vim-config
+
+dulwich = git+https://github.com/jelmer/dulwich.git
+guestrepo = https://bitbucket.org/selinc/guestrepo
+hg-git = https://bitbucket.org/durin42/hg-git
+zenburn-xcode = git+https://github.com/pitkali/Zenburn-for-Xcode.git

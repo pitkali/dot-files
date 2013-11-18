@@ -1,0 +1,6 @@
+emacs.d = emacs default
+vim = vim default
+zenburn-for-xcode = zenburn-xcode master
+lib/dulwich = dulwich master
+lib/hg-git = hg-git default
+lib/guestrepo = guestrepo default

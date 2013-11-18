@@ -1,0 +1,34 @@
+# -*- indent-tabs-mode: t -*-
+[user]
+	name = Piotr Kalinowski
+	email = pitkali@gmail.com
+[core]
+	filemode = true
+	trustctime = false
+	compresssion = 9
+	excludesfile = /Users/pitkali/.my-config/git/excludes
+	editor = /usr/local/bin/emacsclient -c -a /Applications/Emacs.app/Contents/MacOS/Emacs
+[alias]
+	ll = log --stat
+	last = log --stat -1
+[color]
+	ui = auto
+	pager = true
+[diff]
+	renames = true
+[gui]
+	spellingdictionary = en_GB
+	fontui = -family Helvetica -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+	fontdiff = -family Consolas -size 14 -weight normal -slant roman -underline 0 -overstrike 0
+[merge]
+	tool = myemerge
+[mergetool "myemerge"]
+	cmd = /usr/local/bin/emacsclient -c --eval \"(emerge-files-with-ancestor 0 \\\"$LOCAL\\\" \\\"$REMOTE\\\" \\\"$BASE\\\" \\\"$(basename \"$MERGED\")\\\")\"
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[push]
+	default = upstream

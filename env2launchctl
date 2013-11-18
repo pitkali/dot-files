@@ -1,0 +1,13 @@
+#!/bin/zsh
+
+source ~/.zshrc
+
+vars=(EMACS_HOME EMACS EMACSCLIENT EDITOR VISUAL PATH)
+for var in $vars; do
+  eval "val=\"\$${var}\""
+  if [[ -n "$val" ]]; then
+    launchctl setenv "$var" "$val"
+  fi
+done
+
+sleep 1

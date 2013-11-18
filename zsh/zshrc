@@ -1,0 +1,190 @@
+# -*- shell-script -*-
+
+fpath=(~/.my-config/zsh $fpath)
+
+# The following lines were added by compinstall
+
+zstyle ':completion:*' completer _expand _complete _match _approximate
+zstyle ':completion:*' completions 1
+zstyle ':completion:*' glob 1
+zstyle ':completion:*' match-original both
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-/\]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*' max-errors 2
+zstyle ':completion:*' substitute 1
+zstyle ':completion::*:git-{name-rev,add,rm}:*' ignore-line true
+zstyle ':completion:*' accept-exact '*(N)'
+zstyle :compinstall filename '~/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory extendedglob
+unsetopt beep
+bindkey -e
+# End of lines configured by zsh-newuser-install
+
+export PATH=$HOME/bin:$HOME/Library/Haskell/bin:$PATH
+
+##
+# Configuration of the default editor. This assumes using the commands emacs
+# and emacsclient, and hopefully they will correspond to the right version
+# of emacs. With emacs 24.2 as built on Mac from homebrew you just need to
+# edit /etc/paths and move /usr/local/bin path to the beginning to allow
+# shadowing system versions of tools with the ones built from homebrew.
+
+export EMACS_HOME=/Applications/Emacs.app/Contents/MacOS
+export EMACS=$EMACS_HOME/Emacs
+export EMACSCLIENT=/usr/local/bin/emacsclient
+
+alias oem="open -a Emacs.app"
+alias em="$EMACS"
+alias ecs="$EMACS --daemon"
+alias ec="$EMACSCLIENT -a $EMACS"
+alias ke="killall `basename $EMACS`"
+
+export EDITOR="$EMACSCLIENT -a $EMACS -c"
+export VISUAL="$EDITOR"
+
+##
+# Ruby version manager
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
+
+###
+# See if we can use colors.
+
+autoload colors zsh/terminfo
+if [[ "$terminfo[colors]" -ge 8 ]]; then
+    colors
+fi
+for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
+    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
+    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
+    (( count = $count + 1 ))
+done
+PR_NO_COLOUR="%{$terminfo[sgr0]%}"
+
+typeset -A altchar
+set -A altchar ${(s..)terminfo[acsc]}
+PR_SET_CHARSET="%{$terminfo[enacs]%}"
+PR_SHIFT_IN="%{$terminfo[smacs]%}"
+PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
+PR_HBAR=${altchar[q]:--}
+PR_ULCORNER=${altchar[l]:--}
+PR_LLCORNER=${altchar[m]:--}
+PR_LRCORNER=${altchar[j]:--}
+PR_URCORNER=${altchar[k]:--}
+
+GIT_COLOUR=$PR_GREEN
+STG_COLOUR=$PR_YELLOW
+HG_COLOUR=$PR_CYAN
+BZR_COLOUR=$PR_RED
+
+setopt prompt_subst
+VCS_INFO=vcs-info.rkt
+which racket &>/dev/null || VCS_INFO=vcs_info.py
+
+function precmd() {
+    local termwidth min_prompt_size the_prompt_size max_vcs_width
+
+    (( termwidth = ${COLUMNS} - 1 ))
+    min_prompt_size=${#${(%):-- %n %3c -}}
+    (( max_vcs_width = $termwidth - $min_prompt_size ))
+
+    local raw_vcs_info decorated_vcs_info
+    $VCS_INFO $max_vcs_width | IFS=$'\t' read -r raw_vcs_info decorated_vcs_info
+    the_prompt_size=${#${(%):-- %n %3c$raw_vcs_info -}}
+    eval _vcs_info_string=\"$decorated_vcs_info\"
+
+    _filler="\${(l.(($termwidth - $the_prompt_size)).. .)}"
+
+    PROMPT='$PR_SET_CHARSET$PR_SHIFT_IN$PR_CYAN$PR_ULCORNER$PR_SHIFT_OUT \
+$PR_YELLOW%n $PR_CYAN%3c$PR_SHIFT_IN${(e)_filler}$PR_SHIFT_OUT\
+$_vcs_info_string \
+$PR_SHIFT_IN$PR_CYAN$PR_URCORNER$PR_SHIFT_OUT\
+
+$PR_SHIFT_IN$PR_CYAN$PR_LLCORNER$PR_SHIFT_OUT \
+$PR_YELLOW%% $PR_NO_COLOUR'
+    RPROMPT='$PR_SHIFT_IN$PR_CYAN$PR_LRCORNER$PR_NO_COLOUR$PR_SHIFT_OUT'
+}
+
+# Tell the terminal about the working directory whenever it changes.
+if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
+
+    update_terminal_cwd() {
+        # Identify the directory using a "file:" scheme URL, including
+        # the host name to disambiguate local vs. remote paths.
+
+        # Percent-encode the pathname.
+        local URL_PATH=''
+        {
+            # Use LANG=C to process text byte-by-byte.
+            local i ch hexch LANG=C
+            for ((i = 1; i <= ${#PWD}; ++i)); do
+                ch="$PWD[i]"
+                if [[ "$ch" =~ [/._~A-Za-z0-9-] ]]; then
+                    URL_PATH+="$ch"
+                else
+                    hexch=$(printf "%02X" "'$ch")
+                    URL_PATH+="%$hexch"
+                fi
+            done
+        }
+
+        local PWD_URL="file://$HOST$URL_PATH"
+        #echo "$PWD_URL"        # testing
+        printf '\e]7;%s\a' "$PWD_URL"
+    }
+
+    # Register the function so it is called whenever the working
+    # directory changes.
+    autoload add-zsh-hook
+    add-zsh-hook chpwd update_terminal_cwd
+
+    # Tell the terminal about the initial directory.
+    update_terminal_cwd
+fi
+
+# Configure keys
+bindkey "^Z"    accept-and-hold
+bindkey " "     magic-space  # also do history expansion on space
+bindkey "^[[3~" delete-char
+bindkey "^[[A"  up-line-or-search
+bindkey "^[[B"  down-line-or-search
+
+# captured with "od -c"
+bindkey "^[[5D"  backward-word
+bindkey "^[[5C"  forward-word
+
+## Cygwin Console
+# Cygwin Console does not distinguish between [Ctrl]+[<|] and [<|]
+# respectively [Ctrl]+[|>] and [|>]
+if   [ "$TERM" = cygwin ]
+then bindkey "\e[1~" beginning-of-line
+     bindkey "\e[4~" end-of-line
+fi
+
+umask 022
+
+alias ls='ls -G'
+export LESS='RSFX'
+
+alias ctags='/usr/local/bin/ctags --c-kinds=+p --c++-kinds=+p'
+alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"
+
+export ASDF_SOURCE="$HOME/.local/share/common-lisp/source"
+export ASDF_CONFIG="$HOME/.config/common-lisp/source-registry.conf.d"
+export QL_LOCAL="$HOME/quicklisp/local-projects"
+
+function asdf-install () {
+    for d in $@; do
+        find $d(:a) -name '*.asd' -exec ln -sf '{}' ~/.asd-links/ ';'
+    done
+}
+
+alias asdf-list='ls -l ~/.asd-links/'
+
