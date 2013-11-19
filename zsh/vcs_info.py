@@ -77,9 +77,34 @@ def hg_status():
         return [""]
 
     branch = ""
-    with open(os.path.join(toplevel, ".hg", "branch")) as f:
-        branch = f.read().strip()
-    return [" (hg:%s)" % (branch,), " (hg)", " (h)"]
+    branch_path = os.path.join(toplevel, ".hg", "branch")
+    # This path may not exist, if we're on the default branch.
+    if os.path.exists(branch_path):
+        with open(branch_path) as f:
+            branch = f.read().strip()
+        # Don't list default branch, it's not useful.
+        if branch == "default":
+            branch = ""
+    bookmark = ""
+    bookmark_path = os.path.join(toplevel, ".hg", "bookmarks.current")
+    if os.path.exists(bookmark_path):
+        with open(bookmark_path) as f:
+            bookmark = f.read().strip()
+            if bookmark and bookmark != "@":
+                bookmark = "@" + bookmark
+    mqpatch = ""
+    if os.path.exists(os.path.join(toplevel, ".hg", "patches", "series")):
+        # There is a patch series here. Indicate this with `#'.
+        mqpatch = "#"
+        # Try to see if there is anything applied. If such is the case, report
+        # the top applied patch. We're not handling any guards though, as there
+        # might be any number of those.
+        patch_name = ""
+        with open(os.path.join(toplevel, ".hg", "patches", "status")) as f:
+            for line in f:
+                patch_name = line.split(":")[1].strip()
+        mqpatch += patch_name
+    return [" (hg:%s%s%s)" % (branch, bookmark, mqpatch), " (hg)", " (h)"]
 
 def last_dir(path):
     if path[-1:] == os.path.sep:

@@ -63,7 +63,10 @@
           (if (string=? head prefix) tail #f)))))
 
 (define (read-line-from-path path)
-  (with-input-from-file path (λ () (read-line)) #:mode 'text))
+  (if (file-exists? path)
+      (let ([line (with-input-from-file path (λ () (read-line)) #:mode 'text)])
+        (if (eof-object? line) "" line))
+      ""))
 
 ;; Describes how to check status of a VCS.
 (struct vcs-checker (;; Symbol of this VCS.
@@ -197,10 +200,47 @@
 (define (hg-source-root info path)
   (find-enclosing-dir-with-dir ".hg" path))
 
+(define (hg-mq-patch-name source-root)
+  (define (path-exists? path)
+    (or (file-exists? path)
+        (directory-exists? path)))
+  (define patches-dir (build-path source-root ".hg" "patches"))
+  (define (top-patch)
+    (define (process-line line)
+      (cond
+       [(regexp-match #px"^[0-9a-fA-F]+:(.*)$" line) => (λ (match) (cadr match))]
+       [else ""]))
+    (with-input-from-file (build-path patches-dir "status")
+      (λ () (or (for/last ([line (in-lines)]
+                           ;; Skip whitespace only lines, just in case.
+                           #:unless (regexp-match? #px"^[ \t\r\n]*$" line))
+                  (process-line line))
+                ""))
+      #:mode 'text))
+  (if (not (path-exists? (build-path patches-dir "series")))
+      ""
+      (format "#~a" (top-patch))))
+
 (define (hg-check-status info source-root)
   (let* ([branch-path (build-path source-root ".hg" "branch")]
-         [branch-name (or (read-line-from-path branch-path) "")])
-    `((descriptions . (,(format " (hg:~a)" branch-name) " (hg)" " (h)")))))
+         ;; If branch-path exists, read branch name from it, defaulting to empty string.
+         ;; If it's not there, we're on default branch, which we'll denote as empty string
+         ;; as well. Mentioning `default' as the branch name is not really useful.
+         [branch-name (read-line-from-path branch-path)]
+         [bookmark-path (build-path source-root ".hg" "bookmarks.current")]
+         [bookmark-name (read-line-from-path bookmark-path)]
+         [mq-patch (hg-mq-patch-name source-root)])
+    `((descriptions . (,(format " (hg:~a~a~a)"
+                                (if (string=? branch-name "default") "" branch-name)
+                                (if (or (= (string-length bookmark-name) 0)
+                                        (string=? bookmark-name "@"))
+                                    ;; If there's no bookmark or it's the default one,
+                                    ;; use it's name verbatim.
+                                    bookmark-name
+                                    ;; Otherwise prepend `@' to denote bookmark name.
+                                    (format "@~a" bookmark-name))
+                                mq-patch)
+                       " (hg)" " (h)")))))
 
 (define hg-checker (vcs-checker 'hg "$HG_COLOUR"
                                 hg-source-root hg-check-status))
