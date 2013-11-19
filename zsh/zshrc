@@ -175,6 +175,7 @@ umask 022
 
 alias ls='ls -G'
 export LESS='RSFX'
+export PAGER='less'
 
 alias ctags='/usr/local/bin/ctags --c-kinds=+p --c++-kinds=+p'
 alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"

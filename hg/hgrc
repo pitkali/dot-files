@@ -30,5 +30,9 @@ cacerts = ~/.my-config/hg/dummycert.pem
 qseries.applied = green bold
 qseries.unapplied = magenta bold
 
+[pager]
+pager = less
+attend = annotate, cat, diff, export, glog, log, qdiff, help
+
 [schemes]
 gh = git+https://github.com/
