@@ -3,9 +3,11 @@
 confdir=$HOME/.my-config
 source $confdir/zsh/zshrc
 
+# Bootstrapping of basic libraries required to get all the configuration
 cd $confdir/lib || exit 1
 [[ -d hg-git ]] || hg clone https://bitbucket.org/durin42/hg-git
 [[ -d guestrepo ]] || hg clone https://bitbucket.org/selinc/guestrepo
+[[ -d dulwich ]] || git clone https://github.com/jelmer/dulwich.git
 
 cd $HOME
 
@@ -13,6 +15,9 @@ ln -sf $confdir/git-config .gitconfig
 ln -sf $confdir/hg/hgrc .hgrc
 sudo easy_install pip
 sudo pip install --upgrade $confdir/lib/dulwich
+
+# Make sure we have all of the configuration for installation
+(cd $confdir && hg grpull -u)
 
 ln -sf $confdir/emacs.d .emacs.d
 [[ -z "$EMACS" -o ! -x $EMACS ]] && EMACS=emacs
