@@ -68,6 +68,13 @@
         (if (eof-object? line) "" line))
       ""))
 
+;; Prompt used for early return in case of missing VCS.
+(define vcs-check-prompt-tag (make-continuation-prompt-tag))
+
+;; Utility for readable eary return.
+(define (no-such-repo)
+  (abort-current-continuation vcs-check-prompt-tag #f))
+
 ;; Describes how to check status of a VCS.
 (struct vcs-checker (;; Symbol of this VCS.
                      name
@@ -95,7 +102,9 @@
 
 ;; Uses vcs-checker structure to check VCS status in a path, and augment info accordingly.
 (define (probe-vcs vcs info [path (current-directory)])
-  (define source-root (let ([raw-path ((vcs-checker-source-root vcs) info path)])
+  (define source-root (let ([raw-path (call-with-continuation-prompt
+                                       (λ () ((vcs-checker-source-root vcs) info path))
+                                       vcs-check-prompt-tag)])
                         (if raw-path (resolve-path raw-path) #f)))
   (if (not source-root)
       info
@@ -173,15 +182,15 @@
 
 (define (stg-source-root info path)
   (let ([git-info (info-for-vcs 'git info)])
-    (if (not git-info)
-        #f
-        (let* ([git-dir (lookup-for-vcs 'git-dir git-info)]
-               [branch-name (lookup-for-vcs 'branch-name git-info)]
-               [branch-dir (if branch-name (stg-branch-dir git-dir branch-name) #f)])
-          (if (or (not branch-name)
-                  (not (directory-exists? branch-dir)))
-              #f
-              (lookup-for-vcs 'source-root git-info))))))
+    (unless git-info
+      (no-such-repo))
+    (let* ([git-dir (lookup-for-vcs 'git-dir git-info)]
+           [branch-name (lookup-for-vcs 'branch-name git-info)]
+           [branch-dir (if branch-name (stg-branch-dir git-dir branch-name) #f)])
+      (unless (and branch-name
+                   (directory-exists? branch-dir))
+        (no-such-repo))
+      (lookup-for-vcs 'source-root git-info))))
 
 (define (stg-check-status info source-root)
   (define git-info (info-for-vcs 'git info))
