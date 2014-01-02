@@ -1,0 +1,2 @@
+1. Set overlay delay to 300ms.
+2. Set key repeat rate to 15ms.
