@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<root>
+  <vkchangeinputsourcedef>
+    <name>KeyCode::VK_CHANGE_INPUTSOURCE_US_EXTENDED</name>
+    <inputsourceid_equal>com.apple.keylayout.USExtended</inputsourceid_equal>
+  </vkchangeinputsourcedef>
+
+  <item>
+    <name>My Language Modifiers</name>
+    <item>
+      <name>Command_L to Command_L</name>
+      <appendix>(+ When you type Command_L only, change Input Source to Polish Pro)</appendix>
+      <identifier>private.remap.swedish_commandL2commandL_polish_pro</identifier>
+      <autogen>__KeyOverlaidModifier__ KeyCode::COMMAND_L, KeyCode::COMMAND_L, KeyCode::VK_CHANGE_INPUTSOURCE_POLISH_PRO</autogen>
+    </item>
+    <item>
+      <name>Command_R to Command_R</name>
+      <appendix>(+ When you type Command_R only, change Input Source to Swedish Pro)</appendix>
+      <identifier>private.remap.swedish_commandR2commandR_swedish_pro</identifier>
+      <autogen>__KeyOverlaidModifier__ KeyCode::COMMAND_R, KeyCode::COMMAND_R, KeyCode::VK_CHANGE_INPUTSOURCE_SWEDISH_PRO</autogen>
+    </item>
+    <item>
+      <name>PCApplication to US Extended</name>
+      <identifier>private.remap.swedish_pcapplication2usextended</identifier>
+      <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::VK_CHANGE_INPUTSOURCE_US_EXTENDED</autogen>
+    </item>
+  </item>
+</root>
