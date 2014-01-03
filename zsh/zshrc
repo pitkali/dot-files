@@ -43,7 +43,7 @@ export EMACS_HOME=/Applications/Emacs.app/Contents/MacOS
 export EMACS=$EMACS_HOME/Emacs
 export EMACSCLIENT=/usr/local/bin/emacsclient
 
-alias oem="open -a Emacs.app"
+alias oem="open -a /Applications/Emacs.app"
 alias em="$EMACS"
 alias ecs="$EMACS --daemon"
 alias ec="$EMACSCLIENT -a $EMACS"
