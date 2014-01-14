@@ -11,3 +11,8 @@ for var in $vars; do
 done
 
 sleep 1
+
+# Make sure new environment is applied to Finder and Dock, so that applications
+# launched from GUI actually use the variables just set.
+killall Finder
+killall Dock
