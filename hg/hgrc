@@ -26,6 +26,9 @@ guestrepo = ~/.my-config/lib/guestrepo/guestrepo
 [web]
 cacerts = ~/.my-config/hg/dummycert.pem
 
+[hostfingerprints]
+bitbucket.org = 45:AD:AE:1A:CF:0E:73:47:06:07:E0:88:F5:CC:10:E5:FA:1C:F7:99
+
 [color]
 qseries.applied = green bold
 qseries.unapplied = magenta bold
