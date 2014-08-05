@@ -49,6 +49,8 @@ alias ecs="$EMACS --daemon"
 alias ec="$EMACSCLIENT -a $EMACS"
 alias ke="killall `basename $EMACS`"
 
+alias rvim="mvim --remote"
+
 export EDITOR="$EMACSCLIENT -a $EMACS -c"
 export VISUAL="$EDITOR"
 
