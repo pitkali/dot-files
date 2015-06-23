@@ -45,8 +45,8 @@ ln -sf $confdir/zsh/vcs_info.py $HOME/bin
 ln -sf $confdir/zsh/vcs-info.rkt $HOME/bin
 
 [[ -d $HOME/Library/LaunchAgents ]] || mkdir -m 0755 $HOME/Library/LaunchAgents
-ln -sf $confdir/com.pitkali.env2launchctl.plist $HOME/Library/LaunchAgents
-sudo cp $confdir/env2launchctl /usr/libexec
+ln -sf $confdir/mac/com.pitkali.env2launchctl.plist $HOME/Library/LaunchAgents
+sudo cp $confdir/mac/env2launchctl /usr/libexec
 
 sudo zsh -c "echo /usr/local/bin | cat - /etc/paths > /etc/paths"
 sudo zsh -c "echo /Applications/Racket/bin > /etc/paths.d/Racket"
