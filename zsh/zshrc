@@ -27,6 +27,11 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+if [[ -d $HOME/Library/Android ]]; then
+    export ANDROID_LIB=$HOME/Library/Android
+    export PATH=$ANDROID_LIB/sdk/platform-tools:$ANDROID_LIB/sdk/tools:$ANDROID_LIB/ndk:$PATH
+fi
+
 export PATH=$HOME/bin:$HOME/Library/Haskell/bin:$PATH
 
 # Apparently OS X does not set this one using system language, but region instead.
