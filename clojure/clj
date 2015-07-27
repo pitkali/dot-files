@@ -1,0 +1,21 @@
+#!/bin/sh
+
+COMMAND=`which java`
+
+case `basename $0` in
+    clj-java) ;;  # Nothing to change
+    clj-drip)
+        COMMAND=`which drip`
+        ;;
+    *)  # Auto detect
+        if which -s drip; then
+            COMMAND=`which drip`
+        fi
+        ;;
+esac
+
+if [[ -z "$CLJAR" ]]; then
+    CLJAR=~/.clojure.jar
+fi
+
+exec "$COMMAND" -cp "$CLJAR" clojure.main "$@"
