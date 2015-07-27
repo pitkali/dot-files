@@ -3,6 +3,8 @@
 confdir=$HOME/.my-config
 source $confdir/zsh/zshrc
 
+[[ -d $HOME/bin ]] || mkdir $HOME/bin
+
 # Bootstrapping of basic libraries required to get all the configuration
 ln -sf $confdir/git-config $HOME/.gitconfig
 cd $confdir && git submodule init && git submodule update
@@ -33,8 +35,13 @@ cat > $HOME/.config/common-lisp/source-registry.conf.d/42-asd-links.conf << EOF
 (:directory "$HOME/.asd-links/")
 EOF
 
+mkdir $HOME/.lein && ln -sf $confdir/clojure/profiles.clj $HOME/.lein
+ln -sf $confdir/clojure/lein-exec{,-p} $HOME/bin
+for target in clj{,-java,-drip}; do
+    ln -sf $confdir/clojure/clj $HOME/bin/$target
+done
+
 ln -sf $confdir/zsh/zshrc .zshrc
-[[ -d $HOME/bin ]] || mkdir $HOME/bin
 ln -sf $confdir/zsh/vcs_info.py $HOME/bin
 ln -sf $confdir/zsh/vcs-info.rkt $HOME/bin
 
