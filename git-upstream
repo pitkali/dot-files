@@ -1,0 +1,9 @@
+#!/bin/sh
+
+REFSPEC=$1
+shift
+
+for remote in "$@"; do
+    echo "*** Pushing $REFSPEC to $remote ***"
+    git push "$remote" "$REFSPEC"
+done
