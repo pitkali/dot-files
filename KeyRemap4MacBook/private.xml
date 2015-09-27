@@ -20,9 +20,34 @@
       <autogen>__KeyOverlaidModifier__ KeyCode::COMMAND_R, KeyCode::COMMAND_R, KeyCode::VK_CHANGE_INPUTSOURCE_SWEDISH_PRO</autogen>
     </item>
     <item>
-      <name>PCApplication to US Extended</name>
-      <identifier>private.remap.swedish_pcapplication2usextended</identifier>
-      <autogen>__KeyToKey__ KeyCode::PC_APPLICATION, KeyCode::VK_CHANGE_INPUTSOURCE_US_EXTENDED</autogen>
+      <name>Control_R to Control_R</name>
+      <appendix>(+ WHen you type Control_R only, change Input Source to US Extended)</appendix>
+      <identifier>private.remap.swedish_controlR2controlR_usextended</identifier>
+      <autogen>__KeyOverlaidModifier__ KeyCode::CONTROL_R, KeyCode::CONTROL_R, KeyCode::VK_CHANGE_INPUTSOURCE_US_EXTENDED</autogen>
+    </item>
+  </item>
+  <item>
+    <name>TEK home and end</name>
+    <item>
+      <name>Home to Command_L</name>
+      <appendix>(+ When you type Command_L only, change Input Source to Polish Pro)</appendix>
+      <identifier>private.remap.tek.home2commandL</identifier>
+      <autogen>__KeyOverlaidModifier__ KeyCode::HOME, KeyCode::COMMAND_L, KeyCode::VK_CHANGE_INPUTSOURCE_POLISH_PRO</autogen>
+    </item>
+    <item>
+      <name>End to Option_L</name>
+      <identifier>private.remap.tek.end2optionL</identifier>
+      <autogen>__KeyToKey__ KeyCode::END, KeyCode::OPTION_L</autogen>
+    </item>
+    <item>
+      <name>Command_L to Home</name>
+      <identifier>private.remap.tek.commandL2home</identifier>
+      <autogen>__KeyToKey__ KeyCode::COMMAND_L, KeyCode::HOME</autogen>
+    </item>
+    <item>
+      <name>Option_L to End</name>
+      <identifier>private.remap.tek.optionL2end</identifier>
+      <autogen>__KeyToKey__ KeyCode::OPTION_L, KeyCode::END</autogen>
     </item>
   </item>
 </root>
