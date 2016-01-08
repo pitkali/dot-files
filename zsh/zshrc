@@ -102,53 +102,12 @@ $PR_YELLOW%% $PR_NO_COLOUR'
     RPROMPT='$PR_SHIFT_IN$PR_CYAN$PR_LRCORNER$PR_NO_COLOUR$PR_SHIFT_OUT'
 }
 
-# Tell the terminal about the working directory whenever it changes. [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && 
-if [[ -z "$INSIDE_EMACS" ]]; then
-
-    update_terminal_cwd() {
-        # Identify the directory using a "file:" scheme URL, including
-        # the host name to disambiguate local vs. remote paths.
-
-        # Percent-encode the pathname.
-        local URL_PATH=''
-        {
-            # Use LANG=C to process text byte-by-byte.
-            local i ch hexch LANG=C
-            for ((i = 1; i <= ${#PWD}; ++i)); do
-                ch="$PWD[i]"
-                if [[ "$ch" =~ [/._~A-Za-z0-9-] ]]; then
-                    URL_PATH+="$ch"
-                else
-                    hexch=$(printf "%02X" "'$ch")
-                    URL_PATH+="%$hexch"
-                fi
-            done
-        }
-
-        local PWD_URL="file://$HOST$URL_PATH"
-        #echo "$PWD_URL"        # testing
-        printf '\e]7;%s\a' "$PWD_URL"
-    }
-
-    # Register the function so it is called whenever the working
-    # directory changes.
-    autoload add-zsh-hook
-    add-zsh-hook chpwd update_terminal_cwd
-
-    # Tell the terminal about the initial directory.
-    update_terminal_cwd
-fi
-
 # Configure keys
 bindkey "^Z"    accept-and-hold
 bindkey " "     magic-space  # also do history expansion on space
 bindkey "^[[3~" delete-char
 bindkey "^[[A"  up-line-or-search
 bindkey "^[[B"  down-line-or-search
-
-# captured with "od -c"
-bindkey "^[[5D"  backward-word
-bindkey "^[[5C"  forward-word
 
 ## Cygwin Console
 # Cygwin Console does not distinguish between [Ctrl]+[<|] and [<|]
