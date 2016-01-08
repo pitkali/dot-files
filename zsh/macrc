@@ -1,0 +1,28 @@
+# -*- shell-script -*-
+
+if [[ -d $HOME/Library/Haskell/bin ]]; then
+    export PATH=$HOME/Library/Haskell/bin:$PATH
+fi
+
+if [[ -d $HOME/Library/Android ]]; then
+    export ANDROID_LIB=$HOME/Library/Android
+    export PATH=$ANDROID_LIB/sdk/platform-tools:$ANDROID_LIB/sdk/tools:$ANDROID_LIB/ndk:$PATH
+fi
+
+
+# Apparently OS X does not set this one using system language, but region instead.
+export LC_MESSAGES=en_GB.UTF-8
+
+export EMACS_HOME=/Applications/Emacs.app/Contents/MacOS
+export EMACS=$EMACS_HOME/Emacs
+export EMACSCLIENT=/usr/local/bin/emacsclient
+
+alias oem="open -a /Applications/Emacs.app"
+alias em="$EMACS"
+alias ecs="$EMACS --daemon"
+alias ec="$EMACSCLIENT -a $EMACS"
+alias ke="killall `basename $EMACS`"
+
+alias rvim="mvim --remote"
+
+alias ls='ls -G'

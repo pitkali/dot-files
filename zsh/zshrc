@@ -1,6 +1,7 @@
 # -*- shell-script -*-
 
 fpath=(~/.my-config/zsh $fpath)
+localdir=~/.my-config/zsh
 
 # The following lines were added by compinstall
 
@@ -27,35 +28,14 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
-if [[ -d $HOME/Library/Android ]]; then
-    export ANDROID_LIB=$HOME/Library/Android
-    export PATH=$ANDROID_LIB/sdk/platform-tools:$ANDROID_LIB/sdk/tools:$ANDROID_LIB/ndk:$PATH
+osname=`uname`
+if [[ "$osname" = "Darwin" ]]; then
+    source $localdir/macrc
+elif [[ "$osname" = "Linux" ]]; then
+    source $localdir/linuxrc
 fi
 
-export PATH=$HOME/bin:$HOME/Library/Haskell/bin:$PATH
-
-# Apparently OS X does not set this one using system language, but region instead.
-export LC_MESSAGES=en_GB.UTF-8
-
-##
-# Configuration of the default editor. This assumes using the commands emacs
-# and emacsclient, and hopefully they will correspond to the right version
-# of emacs. With emacs 24.2 as built on Mac from homebrew you just need to
-# edit /etc/paths and move /usr/local/bin path to the beginning to allow
-# shadowing system versions of tools with the ones built from homebrew.
-
-export EMACS_HOME=/Applications/Emacs.app/Contents/MacOS
-export EMACS=$EMACS_HOME/Emacs
-export EMACSCLIENT=/usr/local/bin/emacsclient
-
-alias oem="open -a /Applications/Emacs.app"
-alias em="$EMACS"
-alias ecs="$EMACS --daemon"
-alias ec="$EMACSCLIENT -a $EMACS"
-alias ke="killall `basename $EMACS`"
-
-alias rvim="mvim --remote"
-
+export PATH=$HOME/bin:$PATH
 export EDITOR="$EMACSCLIENT -a $EMACS -c"
 export VISUAL="$EDITOR"
 
@@ -122,8 +102,8 @@ $PR_YELLOW%% $PR_NO_COLOUR'
     RPROMPT='$PR_SHIFT_IN$PR_CYAN$PR_LRCORNER$PR_NO_COLOUR$PR_SHIFT_OUT'
 }
 
-# Tell the terminal about the working directory whenever it changes.
-if [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
+# Tell the terminal about the working directory whenever it changes. [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && 
+if [[ -z "$INSIDE_EMACS" ]]; then
 
     update_terminal_cwd() {
         # Identify the directory using a "file:" scheme URL, including
@@ -180,11 +160,12 @@ fi
 
 umask 022
 
-alias ls='ls -G'
 export LESS='RSFX'
 export PAGER='less'
 
-alias ctags='/usr/local/bin/ctags --c-kinds=+p --c++-kinds=+p'
+if which ctags &>/dev/null; then
+    alias ctags="$(which ctags) --c-kinds=+p --c++-kinds=+p"
+fi
 alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"
 
 export ASDF_SOURCE="$HOME/.local/share/common-lisp/source"
