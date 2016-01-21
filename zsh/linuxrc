@@ -1,9 +1,21 @@
 # -*- shell-script -*-
 
+ANDROID_STUDIO_BIN=$HOME/Applications/android-studio/bin
+IDEA_BIN=$HOME/Applications/idea/bin
+
+for dir in $ANDROID_STUDIO_BIN $IDEA_BIN; do
+    export PATH=$dir:$PATH
+done
+
+if [[ -d $HOME/Android ]]; then
+    export ANDROID_LIB=$HOME/Android
+    export PATH=$ANDROID_LIB/Sdk/platform-tools:$ANDROID_LIB/Sdk/tools:$ANDROID_LIB/ndk:$PATH
+fi
+
 export EMACS=`which emacs`
 export EMACSCLIENT=`which emacsclient`
 
-alias oem="$EMACSCLIENT -a $EMACS"
+alias oem="$EMACSCLIENT -n -a $EMACS"
 alias em="$EMACS"
 alias ecs="$EMACS --daemon"
 alias ec="$EMACSCLIENT -a $EMACS"
