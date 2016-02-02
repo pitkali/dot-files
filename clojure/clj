@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env zsh
 
 COMMAND=`which java`
 
@@ -8,7 +8,7 @@ case `basename $0` in
         COMMAND=`which drip`
         ;;
     *)  # Auto detect
-        if which -s drip; then
+        if which drip &>/dev/null; then
             COMMAND=`which drip`
         fi
         ;;
