@@ -7,6 +7,3 @@
 [submodule "dulwich"]
 	path = lib/dulwich
 	url = https://github.com/jelmer/dulwich.git
-[submodule "hg-git"]
-	path = lib/hg-git
-	url = https://github.com/schacon/hg-git.git
