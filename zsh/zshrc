@@ -127,15 +127,3 @@ if which ctags &>/dev/null; then
 fi
 alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"
 
-export ASDF_SOURCE="$HOME/.local/share/common-lisp/source"
-export ASDF_CONFIG="$HOME/.config/common-lisp/source-registry.conf.d"
-export QL_LOCAL="$HOME/quicklisp/local-projects"
-
-function asdf-install () {
-    for d in $@; do
-        find $d(:a) -name '*.asd' -exec ln -sf '{}' ~/.asd-links/ ';'
-    done
-}
-
-alias asdf-list='ls -l ~/.asd-links/'
-
