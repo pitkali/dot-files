@@ -4,6 +4,3 @@
 [submodule "vim"]
 	path = vim
 	url = ../dot-vim.git
-[submodule "dulwich"]
-	path = lib/dulwich
-	url = https://github.com/jelmer/dulwich.git
