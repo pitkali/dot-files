@@ -35,14 +35,12 @@ elif [[ "$osname" = "Linux" ]]; then
     source $localdir/linuxrc
 fi
 
-export PATH=$HOME/bin:$PATH
-export EDITOR="$EMACSCLIENT -a $EMACS -c"
+export PATH=$HOME/bin:$HOME/.cargo/bin:$PATH
+export EDITOR="vim -gf"
 export VISUAL="$EDITOR"
 
 ##
 # Ruby version manager
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
 
 ###
 # See if we can use colors.
@@ -122,11 +120,7 @@ umask 022
 export LESS='RSFX'
 export PAGER='less'
 
-if which ctags &>/dev/null; then
-    alias ctags="$(which ctags) --c-kinds=+p --c++-kinds=+p"
-fi
 alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"
 
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
+# opam configuration
+test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
