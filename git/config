@@ -16,6 +16,7 @@
 	pager = true
 [diff]
 	renames = true
+	tool = gvimdiff
 [gui]
 	spellingdictionary = en_GB
 	fontui = -family Helvetica -size 14 -weight normal -slant roman -underline 0 -overstrike 0
