@@ -39,8 +39,7 @@ export PATH=$HOME/bin:$HOME/.cargo/bin:$PATH
 export EDITOR="vim -gf"
 export VISUAL="$EDITOR"
 
-##
-# Ruby version manager
+export SHELL=`which zsh`
 
 ###
 # See if we can use colors.
