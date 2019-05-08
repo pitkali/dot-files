@@ -29,18 +29,28 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+###
+# Collect all the different sources of executables
+
+for d in .yarn/bin .local/bin .cargo/bin bin; do
+    [[ -d $HOME/$d ]] && PATH=$HOME/$d:$PATH
+done
+export PATH
+
+export EDITOR="vim -gf"
+export VISUAL="$EDITOR"
+
+export SHELL=`which zsh`
+
+###
+# Some OS specific configuration
+
 osname=`uname`
 if [[ "$osname" = "Darwin" ]]; then
     source $localdir/macrc
 elif [[ "$osname" = "Linux" ]]; then
     source $localdir/linuxrc
 fi
-
-export PATH=$HOME/bin:$HOME/.cargo/bin:$PATH
-export EDITOR="vim -gf"
-export VISUAL="$EDITOR"
-
-export SHELL=`which zsh`
 
 ###
 # See if we can use colors.
