@@ -7,7 +7,6 @@
 	trustctime = false
 	compresssion = 9
 	excludesfile = /Users/pitkali/.my-config/git/excludes
-	editor = vim -gf
 [alias]
 	ll = log --stat
 	last = log --stat -1
