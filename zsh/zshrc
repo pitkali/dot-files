@@ -37,8 +37,13 @@ for d in .yarn/bin .local/bin .cargo/bin bin; do
 done
 export PATH
 
-export EDITOR="vim -gf"
-export VISUAL="$EDITOR"
+if [[ -z $SSH_TTY && -n $DISPLAY ]]; then
+    VISUAL="vim -gf"
+else
+    VISUAL="vim -f"
+fi
+EDITOR=$VISUAL
+export EDITOR VISUAL
 
 export SHELL=`which zsh`
 
