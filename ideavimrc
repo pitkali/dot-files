@@ -49,7 +49,7 @@ nnoremap [e :action GotoPreviousError<cr>
 nnoremap <leader>w :action SaveAll<cr>
 nnoremap ZZ :action CloseActiveTab<cr>
 
-inoremap <c-a> <c-o>0
+inoremap <c-a> <c-o>^
 inoremap <c-e> <c-o>$
 
 nnoremap <leader>n :nohlsearch<cr>
