@@ -7,7 +7,7 @@ set showmode
 set surround
 
 inoremap jj <Esc>
-vnoremap jj <Esc>
+vnoremap jk <Esc>
 
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
 nnoremap ]c :action VcsShowNextChangeMarker<cr>
