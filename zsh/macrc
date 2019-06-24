@@ -60,7 +60,11 @@ if [[ "$TERM_PROGRAM" == "Apple_Terminal" || "$TERM_PROGRAM" == "iTerm.app" ]] \
         # changed directory. If you want to show something in the tab title,
         # gotta use OSC 0.
         if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
-          printf '\e]0;%s\a' `print -P %2~`
+          # Left-truncated 2 last directories with ~ substitution
+          local cwd=`print -P "%20<..<%2~"`
+          # The substitution below is required so that iTerm will not print
+          # only the last "word" if path contains spaces.
+          printf '\e]0;%s\a' ${cwd:s/ /\ /}
         fi
     }
 
