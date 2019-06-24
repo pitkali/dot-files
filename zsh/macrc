@@ -64,7 +64,7 @@ if [[ "$TERM_PROGRAM" == "Apple_Terminal" || "$TERM_PROGRAM" == "iTerm.app" ]] \
           local cwd=`print -P "%20<..<%2~"`
           # The substitution below is required so that iTerm will not print
           # only the last "word" if path contains spaces.
-          printf '\e]0;%s\a' ${cwd:s/ /\ /}
+          printf '\e]0;%s\a' ${cwd/ /\ }
         fi
     }
 
