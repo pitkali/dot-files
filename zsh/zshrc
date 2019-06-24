@@ -24,7 +24,7 @@ compinit
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
-setopt appendhistory extendedglob
+setopt appendhistory extendedglob prompt_subst
 unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
@@ -87,26 +87,30 @@ STG_COLOUR=$PR_YELLOW
 HG_COLOUR=$PR_CYAN
 BZR_COLOUR=$PR_RED
 
-setopt prompt_subst
 VCS_INFO=vcs-info.rkt
 which racket &>/dev/null || VCS_INFO=vcs_info.py
 
 function precmd() {
-    local termwidth min_prompt_size the_prompt_size max_vcs_width
+    local termwidth min_prompt_size the_prompt_size max_vcs_width host_info
+    if [[ -z "$SSH_TTY" ]]; then
+        host_info=""
+    else
+        host_info=" @`print -P %m`"
+    fi
 
     (( termwidth = ${COLUMNS} - 1 ))
-    min_prompt_size=${#${(%):-- %n %3c -}}
+    min_prompt_size=${#${(%):-- %n$host_info %3c -}}
     (( max_vcs_width = $termwidth - $min_prompt_size ))
 
     local raw_vcs_info decorated_vcs_info
     $VCS_INFO $max_vcs_width | IFS=$'\t' read -r raw_vcs_info decorated_vcs_info
-    the_prompt_size=${#${(%):-- %n %3c$raw_vcs_info -}}
+    the_prompt_size=${#${(%):-- %n$host_info %3c$raw_vcs_info -}}
     eval _vcs_info_string=\"$decorated_vcs_info\"
 
     _filler="\${(l.(($termwidth - $the_prompt_size)).. .)}"
 
     PROMPT='$PR_SET_CHARSET$PR_SHIFT_IN$PR_CYAN$PR_ULCORNER$PR_SHIFT_OUT \
-$PR_YELLOW%n $PR_CYAN%3c$PR_SHIFT_IN${(e)_filler}$PR_SHIFT_OUT\
+$PR_YELLOW%n$host_info $PR_CYAN%3c$PR_SHIFT_IN${(e)_filler}$PR_SHIFT_OUT\
 $_vcs_info_string \
 $PR_SHIFT_IN$PR_CYAN$PR_URCORNER$PR_SHIFT_OUT\
 
