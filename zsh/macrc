@@ -29,7 +29,8 @@ alias rvim="mvim --remote"
 alias ls='ls -G'
 
 # Tell the terminal about the working directory whenever it changes.
-if  [[ "$TERM_PROGRAM" == "Apple_Terminal" ]] && [[ -z "$INSIDE_EMACS" ]]; then
+if [[ "$TERM_PROGRAM" == "Apple_Terminal" || "$TERM_PROGRAM" == "iTerm.app" ]] \
+     && [[ -z "$INSIDE_EMACS" ]]; then
 
     update_terminal_cwd() {
         # Identify the directory using a "file:" scheme URL, including
