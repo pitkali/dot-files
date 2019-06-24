@@ -1,4 +1,5 @@
 # -*- shell-script -*-
+# vim:ft=zsh
 
 ANDROID_STUDIO_BIN=$HOME/Applications/android-studio/bin
 IDEA_BIN=$HOME/Applications/idea/bin
