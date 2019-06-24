@@ -56,6 +56,13 @@ if [[ "$TERM_PROGRAM" == "Apple_Terminal" || "$TERM_PROGRAM" == "iTerm.app" ]] \
         local PWD_URL="file://$HOST$URL_PATH"
         #echo "$PWD_URL"        # testing
         printf '\e]7;%s\a' "$PWD_URL"
+        # iTerm will use the above only for semantic help including marker of
+        # changed directory. If you want to show something in the tab title,
+        # gotta use OSC 0.
+        if [[ "$TERM_PROGRAM" == "iTerm.app" ]]; then
+          local cwd=`print -P %~`
+          printf '\e]0;%s\a' "$cwd:h:t/$cwd:t"
+        fi
     }
 
     # Register the function so it is called whenever the working
