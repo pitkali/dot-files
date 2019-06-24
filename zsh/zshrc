@@ -95,7 +95,7 @@ function precmd() {
     if [[ -z "$SSH_TTY" ]]; then
         _host_info=""
     else
-        _host_info=" @`print -P %m`"
+        _host_info=" @%m"
     fi
 
     (( termwidth = ${COLUMNS} - 1 ))
