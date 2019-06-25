@@ -50,12 +50,58 @@ export SHELL=`which zsh`
 ###
 # Some OS specific configuration
 
+function update_terminal_cwd() {
+    # Identify the directory using a "file:" scheme URL, including
+    # the host name to disambiguate local vs. remote paths. This
+    # is known as OSC 7 and will be used by Apple Terminal to show
+    # the directory, and by iTerm to add some nice semantic markers.
+
+    # Percent-encode the pathname.
+    local URL_PATH=''
+    {
+        # Use LANG=C to process text byte-by-byte.
+        local i ch hexch LANG=C
+        for ((i = 1; i <= ${#PWD}; ++i)); do
+            ch="$PWD[i]"
+            if [[ "$ch" =~ [/._~A-Za-z0-9-] ]]; then
+                URL_PATH+="$ch"
+            else
+                hexch=$(printf "%02X" "'$ch")
+                URL_PATH+="%$hexch"
+            fi
+        done
+    }
+
+    local PWD_URL="file://$HOST$URL_PATH"
+    #echo "$PWD_URL"        # testing
+    printf '\e]7;%s\a' "$PWD_URL"
+
+    # Emit OSC 0 to set tab title in iTerm and Gnome terminal. I don't really
+    # want to do it under Apple Terminal, because it will already use OSC 7 to
+    # derive tab title, unless I'm in SSH.
+    if [[ "$TERM_PROGRAM" != "Apple_Terminal" || -n "$SSH_TTY" ]]; then
+        # Left-truncated 2 last directories with ~ substitution. The following
+        # space substitution is required so that iTerm will not print only the
+        # last "word" if path contains spaces.
+        printf '\e]0;%s%s\a' \
+            "${(%):-${SSH_TTY:+@%m }}" "${${(%):-%20<..<%2~}/ /\ }"
+    fi
+}
+
 osname=`uname`
 if [[ "$osname" = "Darwin" ]]; then
     source $localdir/macrc
 elif [[ "$osname" = "Linux" ]]; then
     source $localdir/linuxrc
 fi
+
+# Register the function so it is called whenever the working
+# directory changes.
+autoload add-zsh-hook
+add-zsh-hook chpwd update_terminal_cwd
+
+# Tell the terminal about the initial directory.
+update_terminal_cwd
 
 ###
 # See if we can use colors.
