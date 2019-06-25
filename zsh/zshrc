@@ -138,12 +138,8 @@ which racket &>/dev/null || VCS_INFO=vcs_info.py
 
 function precmd() {
     local termwidth min_prompt_size the_prompt_size max_vcs_width
-    if [[ -z "$SSH_TTY" ]]; then
-        _host_info=""
-    else
-        _host_info=" @%m"
-    fi
 
+    _host_info=${SSH_TTY:+ @%m}
     (( termwidth = ${COLUMNS} - 1 ))
     min_prompt_size=${#${(%):-- %n$_host_info %3c -}}
     (( max_vcs_width = $termwidth - $min_prompt_size ))
