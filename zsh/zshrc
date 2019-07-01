@@ -49,6 +49,11 @@ EDITOR=$VISUAL
 export EDITOR VISUAL
 
 export SHELL=`which zsh`
+# For some reason I'm having hard time convincing tmux to offer 256 colours
+# otherwise.
+if [[ "$TERM" == "screen" ]]; then
+    export TERM="screen-256color"
+fi
 
 ###
 # Some OS specific configuration
