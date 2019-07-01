@@ -29,6 +29,9 @@ unsetopt beep
 bindkey -e
 # End of lines configured by zsh-newuser-install
 
+# Needed by vim completion with deoplete
+zmodload zsh/zpty
+
 ###
 # Collect all the different sources of executables
 
