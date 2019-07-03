@@ -32,3 +32,6 @@ alias ls='ls -G'
 bindkey "^[[5D"  backward-word
 bindkey "^[[5C"  forward-word
 
+# iTerm2
+bindkey "^[^[[D" backward-word
+bindkey "^[^[[C" forward-word
