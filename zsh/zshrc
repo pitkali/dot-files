@@ -35,10 +35,15 @@ zmodload zsh/zpty
 ###
 # Collect all the different sources of executables
 
-for d in .yarn/bin .local/bin .cargo/bin bin; do
-    [[ -d $HOME/$d ]] && PATH=$HOME/$d:$PATH
+typeset -U PATH path
+path=($HOME/bin $path)
+for d in $HOME/.local/bin .yarn/bin .cargo/bin; do
+    [[ -d $HOME/$d && -z $path[(r)$HOME/$d] ]] && path+=$HOME/$d
 done
-export PATH
+if [[ -x `which go` ]]; then
+    gopath=`go env GOPATH`
+    [[ -z $path[(r)$gopath/bin] ]] && path+=$gopath/bin
+fi
 
 if [[ -z $SSH_TTY && -n $DISPLAY ]]; then
     VISUAL="vim -gf"
@@ -188,6 +193,7 @@ umask 022
 
 export LESS='RSFX'
 export PAGER='less'
+export PATH
 
 alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"
 
