@@ -146,8 +146,7 @@ STG_COLOUR=$PR_YELLOW
 HG_COLOUR=$PR_CYAN
 BZR_COLOUR=$PR_RED
 
-VCS_INFO=vcs-info.rkt
-which racket &>/dev/null || VCS_INFO=vcs_info.py
+VCS_INFO=vcs_info.py
 
 function precmd() {
     local termwidth min_prompt_size the_prompt_size max_vcs_width
