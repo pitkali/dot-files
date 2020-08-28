@@ -194,6 +194,14 @@ export LESS='RSFX'
 export PAGER='less'
 export PATH
 
+ext_timefmt='%J %U user %S system %P cpu %*E total
+  avg shared (code): %X KB
+  avg unshared (data/stack): %D KB
+  total (sum): %K KB
+  max memory: %M MB
+  page faults from disk: %F
+  other page faults: %R'
+
 alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"
 
 # opam configuration
