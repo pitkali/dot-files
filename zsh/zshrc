@@ -37,7 +37,7 @@ zmodload zsh/zpty
 
 typeset -U PATH path
 path=($HOME/bin $path)
-for d in $HOME/.local/bin .yarn/bin .cargo/bin; do
+for d in .local/bin .yarn/bin .cargo/bin; do
     [[ -d $HOME/$d && -z $path[(r)$HOME/$d] ]] && path+=$HOME/$d
 done
 if [[ -x `which go` ]]; then
