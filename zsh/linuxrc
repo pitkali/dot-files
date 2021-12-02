@@ -12,6 +12,9 @@ if [[ -d $HOME/.local/dotnet ]]; then
     path+=$DOTNET_ROOT
 fi
 
+linuxbrew=/home/linuxbrew/.linuxbrew/bin/brew
+[[ -x $linuxbrew ]] && eval "$($linuxbrew shellenv)"
+
 export EMACS=`which emacs`
 export EMACSCLIENT=`which emacsclient`
 

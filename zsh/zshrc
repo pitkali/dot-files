@@ -37,7 +37,8 @@ zmodload zsh/zpty
 
 typeset -U PATH path
 path=($HOME/bin $path)
-for d in .local/bin .yarn/bin .cargo/bin; do
+for d in depot_tools .local/bin .yarn/bin .cargo/bin \
+    .local/share/coursier/bin; do
     [[ -d $HOME/$d && -z $path[(r)$HOME/$d] ]] && path+=$HOME/$d
 done
 if [[ -x `which go` ]]; then
@@ -45,11 +46,7 @@ if [[ -x `which go` ]]; then
     [[ -z $path[(r)$gopath/bin] ]] && path+=$gopath/bin
 fi
 
-if [[ -z $SSH_TTY && -n $DISPLAY ]]; then
-    VISUAL="vim -gf"
-else
-    VISUAL="vim -f"
-fi
+VISUAL="vim -f"
 EDITOR=$VISUAL
 export EDITOR VISUAL
 
@@ -210,3 +207,6 @@ test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /de
 rg=`which rg`
 [[ -n $rg ]] && export FZF_DEFAULT_COMMAND="\"$rg\" --files"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
