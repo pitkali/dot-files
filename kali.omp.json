@@ -21,7 +21,8 @@
           "properties": {
             "prefix": " \uF07C  ",
             "home_icon": "~",
-            "style": "full"
+            "style": "agnoster_short",
+            "max_depth": 3
           }
         },
         {
