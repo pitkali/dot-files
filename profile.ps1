@@ -21,7 +21,6 @@ Import-Module PSColors
 # is not something you do often and I do like the result.
 Import-Module -Name Terminal-Icons
 Import-Module posh-git
-$env:POSH_GIT_ENABLED = $true
 
 # Easy, nice prompt.
 oh-my-posh --init --shell pwsh --config ~/.my-config/kali.omp.json | Invoke-Expression
