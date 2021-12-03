@@ -19,7 +19,7 @@
           "foreground": "#e4e4e4",
           "background": "#3465a4",
           "properties": {
-            "prefix": " \uF07C ",
+            "prefix": " \uF07C  ",
             "home_icon": "~",
             "style": "full"
           }
