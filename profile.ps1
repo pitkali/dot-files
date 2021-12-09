@@ -13,9 +13,11 @@ if ($host.Name -eq 'ConsoleHost')
 }
 
 # Even though Terminal-Icons largely replaces PSColors, I still use it to hide
-# dot files.
-$env:PSCOLORS_HIDE_DOTFILE = $true
-Import-Module PSColors
+# dot files. This only works on Windows, though.
+if ($IsWindows) {
+    $env:PSCOLORS_HIDE_DOTFILE = $true
+    Import-Module PSColors
+}
 
 # This slows down startup quite a bit but I guess starting up an interactive shell
 # is not something you do often and I do like the result.
