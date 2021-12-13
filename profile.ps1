@@ -27,6 +27,20 @@ Import-Module posh-git
 # Easy, nice prompt.
 oh-my-posh --init --shell pwsh --config ~/.my-config/kali.omp.json | Invoke-Expression
 
+if (!$IsWindows) {
+    # Use escape code OSC 0 to set tab title under terminal emulators. First,
+    # rename prompt prepared by posh to wrap it.
+    Rename-Item -Path "Function:\prompt" -NewName "_pprompt"
+    function prompt {
+        $Local:cwd = (Get-Location).Path -replace("^$env:HOME", "~")
+        # Leave only the last 3 path segments for brevity.
+        $Local:shortpath = $Local:cwd.Split([IO.Path]::DirectorySeparatorChar)[-3..-1] `
+            -join [IO.Path]::DirectorySeparatorChar
+        # This calls the posh prompt and then appends the escape sequence.
+        -join((_pprompt), "`e]0;$Local:shortpath`a")
+    }
+}
+
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
     param($wordToComplete, $commandAst, $cursorPosition)
         [Console]::InputEncoding = [Console]::OutputEncoding = $OutputEncoding = [System.Text.Utf8Encoding]::new()
