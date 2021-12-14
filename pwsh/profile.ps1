@@ -39,7 +39,15 @@ if (!$IsWindows) {
         # This calls the posh prompt and then appends the escape sequence.
         -join((_pprompt), "`e]0;$Local:shortpath`a")
     }
+
+    $system_ls = (Get-Command ls).Source
+    function ls { Invoke-Expression "$system_ls --color $args" }
+    function ll { ls -alF @args }
+    function la { ls -A @args }
+    function l { ls -CF @args }
 }
+
+Set-Alias d Get-ChildItem
 
 if (Test-Path "~/.sdkman") {
   . ~/.my-config/pwsh/use-sdk.ps1
