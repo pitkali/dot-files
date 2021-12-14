@@ -30,6 +30,10 @@ oh-my-posh --init --shell pwsh --config ~/.my-config/kali.omp.json | Invoke-Expr
 if (!$IsWindows) {
     # Use escape code OSC 0 to set tab title under terminal emulators. First,
     # rename prompt prepared by posh to wrap it.
+    # Remove if it exists to support reloading profile.
+    if (Test-Path "Function:\_pprompt") {
+        Remove-Item "Function:\_pprompt"
+    }
     Rename-Item -Path "Function:\prompt" -NewName "_pprompt"
     function prompt {
         $Local:cwd = (Get-Location).Path -replace("^$env:HOME", "~")
@@ -50,7 +54,7 @@ if (!$IsWindows) {
 Set-Alias d Get-ChildItem
 
 if (Test-Path "~/.sdkman") {
-  . ~/.my-config/pwsh/use-sdk.ps1
+    . ~/.my-config/pwsh/use-sdk.ps1
 }
 
 Register-ArgumentCompleter -Native -CommandName winget -ScriptBlock {
