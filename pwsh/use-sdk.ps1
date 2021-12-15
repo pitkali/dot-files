@@ -35,8 +35,11 @@ function Use-Sdk {
 		$local:target = $local:current
 	}
 
+	if ($candidate -eq "java") {
+		# If we're changing Java version, we also need to adjust JAVA_HOME.
+		$env:JAVA_HOME = $local:target
+	}
 	$local:target = Join-Path -Path $local:target -ChildPath "bin"
-
 	if ($env:PATH -cnotmatch $local:sdk) {
 		# The SDK is not in scope at all. Just prepend it.
 		$env:PATH = $local:target, $env:PATH -join [IO.Path]::PathSeparator
