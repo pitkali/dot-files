@@ -45,7 +45,7 @@ function Use-Sdk {
 	}
 }
 
-function List-Sdk {
+function Get-Sdk {
 	# .Synopsis
 	# Lists possible versions for an SDK managed by sdkman or SDKs themselves.
 	[CmdletBinding()]
