@@ -17,6 +17,11 @@ if ($host.Name -eq 'ConsoleHost')
 if ($IsWindows) {
     $env:PSCOLORS_HIDE_DOTFILE = $true
     Import-Module PSColors
+
+    if (Test-Path "C:\msys64\usr\bin\tig.exe") {
+      Set-Alias "tig" "C:\msys64\usr\bin\tig.exe"
+      function t { tig status }
+    }
 }
 
 # This slows down startup quite a bit but I guess starting up an interactive shell
