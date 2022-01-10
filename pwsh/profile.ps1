@@ -95,6 +95,8 @@ Set-PSReadLineOption -PredictionViewStyle ListView
 # pretty much reset key handlers.
 Set-PSReadLineOption -EditMode Emacs
 
+Set-PSReadLineKeyHandler -Key Ctrl+LeftArrow -Function BackwardWord
+Set-PSReadLineKeyHandler -Key Ctrl+RightArrow -Function ForwardWord
 
 # Searching for commands with up/down arrow is really handy.  The
 # option "moves to end" is useful if you want the cursor at the end
