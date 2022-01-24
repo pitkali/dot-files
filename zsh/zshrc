@@ -204,8 +204,9 @@ alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec 
 # opam configuration
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
-rg=`which rg`
-[[ -n $rg ]] && export FZF_DEFAULT_COMMAND="\"$rg\" --files"
+export FZF_DEFAULT_COMMAND="fd -tf"
+export FZF_CTRL_T_COMMAND="fd -L . --min-depth 1 -tf -td -tl"
+export FZF_ALT_C_COMMAND="fd -L . --min-depth 1 -td"
 [[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
 
 export SDKMAN_DIR="$HOME/.sdkman"
