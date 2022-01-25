@@ -699,6 +699,12 @@ Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 $env:_PSFZF_FZF_DEFAULT_OPTS = "--height 40%"
 
 # Use fd for faster search through all the directories, though.
-$env:FZF_DEFAULT_COMMAND = "fd -tf"
+$env:FZF_DEFAULT_COMMAND = "fd -tf `"{0}`""
 $env:FZF_CTRL_T_COMMAND = "fd -L . --min-depth 1 -tf -td -tl"
 $env:FZF_ALT_C_COMMAND = "fd -L . --min-depth 1 -td"
+
+# This brings PSFzf more in line with how search works in zsh, and it seems to
+# provide more relevant results.
+$env:FZF_CTRL_R_OPTS = "'-n2..,..' --tiebreak=index --bind=ctrl-r:toggle-sort,ctrl-z:ignore"
+$env:FZF_CTRL_T_OPTS = "--reverse --bind=ctrl-z:ignore"
+$env:FZF_ALT_C_OPTS = "--reverse --bind=ctrl-z:ignore"
