@@ -694,6 +694,7 @@ Set-PSReadLineKeyHandler -Key Alt+a `
 Import-Module PSFzf
 Set-PsFzfOption -PSReadlineChordProvider 'Ctrl+t' `
                 -PSReadlineChordReverseHistory 'Ctrl+r' `
+                -PSReadlineChordSetLocation 'Alt+c' `
                 -TabExpansion
 Set-PSReadLineKeyHandler -Key Tab -ScriptBlock { Invoke-FzfTabCompletion }
 $env:_PSFZF_FZF_DEFAULT_OPTS = "--height 40%"
