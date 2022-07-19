@@ -8,7 +8,7 @@
 	trustctime = false
 	compresssion = 9
 	excludesfile = ~/.my-config/git/excludes
-	editor = vim -f
+	editor = nvim -f
 	autocrlf = input
 [alias]
 	ll = log --stat
@@ -24,6 +24,9 @@
 	fontui = -family Helvetica -size 14 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family Consolas -size 14 -weight normal -slant roman -underline 0 -overstrike 0
 [merge]
-	tool = gvimdiff
+	tool = vimdiff
+	conflictstyle = diff3
 [push]
 	default = upstream
+[mergetool "vimdiff"]
+	path = nvim
