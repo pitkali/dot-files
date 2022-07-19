@@ -1,7 +1,7 @@
 # -*- shell-script -*-
 # vim: sts=4:sw=4
 
-fpath=(~/.my-config/zsh $fpath)
+fpath=(~/.my-config/zsh ~/.zsh/completion $fpath)
 localdir=~/.my-config/zsh
 
 # The following lines were added by compinstall
