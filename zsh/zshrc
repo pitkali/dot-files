@@ -115,60 +115,7 @@ update_terminal_cwd
 
 ###
 # See if we can use colors.
-
-autoload colors zsh/terminfo
-if [[ "$terminfo[colors]" -ge 8 ]]; then
-    colors
-fi
-for color in RED GREEN YELLOW BLUE MAGENTA CYAN WHITE; do
-    eval PR_$color='%{$terminfo[bold]$fg[${(L)color}]%}'
-    eval PR_LIGHT_$color='%{$fg[${(L)color}]%}'
-    (( count = $count + 1 ))
-done
-PR_NO_COLOUR="%{$terminfo[sgr0]%}"
-
-typeset -A altchar
-set -A altchar ${(s..)terminfo[acsc]}
-PR_SET_CHARSET="%{$terminfo[enacs]%}"
-PR_SHIFT_IN="%{$terminfo[smacs]%}"
-PR_SHIFT_OUT="%{$terminfo[rmacs]%}"
-PR_HBAR=${altchar[q]:--}
-PR_ULCORNER=${altchar[l]:--}
-PR_LLCORNER=${altchar[m]:--}
-PR_LRCORNER=${altchar[j]:--}
-PR_URCORNER=${altchar[k]:--}
-
-GIT_COLOUR=$PR_GREEN
-STG_COLOUR=$PR_YELLOW
-HG_COLOUR=$PR_CYAN
-BZR_COLOUR=$PR_RED
-
-VCS_INFO=vcs_info.py
-
-function precmd() {
-    local termwidth min_prompt_size the_prompt_size max_vcs_width
-
-    _host_info=${SSH_TTY:+ @%m}
-    (( termwidth = ${COLUMNS} - 1 ))
-    min_prompt_size=${#${(%):-- %n$_host_info %3c -}}
-    (( max_vcs_width = $termwidth - $min_prompt_size ))
-
-    local raw_vcs_info decorated_vcs_info
-    $VCS_INFO $max_vcs_width | IFS=$'\t' read -r raw_vcs_info decorated_vcs_info
-    the_prompt_size=${#${(%):-- %n$_host_info %3c$raw_vcs_info -}}
-    eval _vcs_info_string=\"$decorated_vcs_info\"
-
-    _filler="\${(l.(($termwidth - $the_prompt_size)).. .)}"
-
-    PROMPT='$PR_SET_CHARSET$PR_SHIFT_IN$PR_CYAN$PR_ULCORNER$PR_SHIFT_OUT \
-$PR_YELLOW%n$_host_info $PR_CYAN%3c$PR_SHIFT_IN${(e)_filler}$PR_SHIFT_OUT\
-$_vcs_info_string \
-$PR_SHIFT_IN$PR_CYAN$PR_URCORNER$PR_SHIFT_OUT\
-
-$PR_SHIFT_IN$PR_CYAN$PR_LLCORNER$PR_SHIFT_OUT \
-$PR_YELLOW%# $PR_NO_COLOUR'
-    RPROMPT='$PR_SHIFT_IN$PR_CYAN$PR_LRCORNER$PR_NO_COLOUR$PR_SHIFT_OUT'
-}
+eval "$(oh-my-posh init zsh --config ~/.my-config/kali.omp.json)"
 
 # Configure keys
 bindkey "^Z"    accept-and-hold
