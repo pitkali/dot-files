@@ -4,8 +4,6 @@
 fpath=(~/.my-config/zsh ~/.zsh/completion $fpath)
 localdir=~/.my-config/zsh
 
-# The following lines were added by compinstall
-
 zstyle ':completion:*' completer _expand _complete _match _approximate
 zstyle ':completion:*' completions 1
 zstyle ':completion:*' glob 1
@@ -17,17 +15,12 @@ zstyle ':completion::*:git-{name-rev,add,rm}:*' ignore-line true
 zstyle ':completion:*' accept-exact '*(N)'
 zstyle :compinstall filename '~/.zshrc'
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=1000
 setopt appendhistory extendedglob prompt_subst
 unsetopt beep
 bindkey -e
-# End of lines configured by zsh-newuser-install
 
 # Needed by vim completion with deoplete
 zmodload zsh/zpty
@@ -114,7 +107,7 @@ add-zsh-hook chpwd update_terminal_cwd
 update_terminal_cwd
 
 ###
-# See if we can use colors.
+# Fancy prompt
 eval "$(oh-my-posh init zsh --config ~/.my-config/kali.omp.json)"
 
 # Configure keys
@@ -147,6 +140,9 @@ ext_timefmt='%J %U user %S system %P cpu %*E total
   other page faults: %R'
 
 alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec rm -fr '{}' ';'"
+alias ll="ls -alF"
+alias la="ls -A"
+alias l="ls -CF"
 
 # opam configuration
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
@@ -158,3 +154,27 @@ export FZF_ALT_C_COMMAND="fd -L . --min-depth 1 -td"
 
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# Some fancy shell improvements.
+source $localdir/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+# Invert the colors between commands and keywords, because that's what I'm used to after pwsh.
+# Also, use light colours.
+typeset -A ZSH_HIGHLIGHT_STYLES
+for type in arg0 command alias function builtin; do
+    ZSH_HIGHLIGHT_STYLES[$type]='fg=11'
+done
+ZSH_HIGHLIGHT_STYLES[suffix-alias]='fg=11,underline'
+for type in double-quoted-argument dollar-quoted-argument single-quoted-argument reserved-word
+do
+    ZSH_HIGHLIGHT_STYLES[$type]='fg=10'
+done
+# Make options stand out less like in pwsh.
+for type in single-hyphen-option double-hyphen-option; do
+    ZSH_HIGHLIGHT_STYLES[$type]='fg=8'
+done
+source $localdir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+autoload -Uz compinit
+compinit
