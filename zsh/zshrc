@@ -46,7 +46,7 @@ if [[ -x `which go` ]]; then
     [[ -z $path[(r)$gopath/bin] ]] && path+=$gopath/bin
 fi
 
-VISUAL="vim -f"
+VISUAL="nvim -f"
 EDITOR=$VISUAL
 export EDITOR VISUAL
 
