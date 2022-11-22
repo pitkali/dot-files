@@ -215,7 +215,7 @@
       "type": "rprompt"
     }
   ],
-  "console_title_template": "{{if .Env.POSH_PWD}}{{ .Env.POSH_PWD }}{{ else }}{{ .Folder }}{{ end }}",
+  "console_title_template": "{{ .Segments.Path.Path }}",
   "final_space": true,
   "version": 2
 }

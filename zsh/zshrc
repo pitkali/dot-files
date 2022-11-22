@@ -109,9 +109,6 @@ update_terminal_cwd
 ###
 # Fancy prompt
 eval "$(oh-my-posh init zsh --config ~/.my-config/kali.omp.json)"
-function set_poshcontext() {
-    export POSH_PWD="${(%):-%3~}"
-}
 
 # Configure keys
 bindkey "^Z"    accept-and-hold
