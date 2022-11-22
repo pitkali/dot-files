@@ -143,6 +143,7 @@ alias cleanbackup="find . -name '.\#*' -or -name '*.moved' -or -name '*~' -exec 
 alias ll="ls -alF"
 alias la="ls -A"
 alias l="ls -CF"
+alias d="ls -gGhF"
 
 # opam configuration
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
