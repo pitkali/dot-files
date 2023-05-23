@@ -5,8 +5,10 @@ set incsearch hlsearch
 set ignorecase smartcase
 set showmode
 set surround
+set easymotion
 
 inoremap jj <Esc>
+vnoremap jk <Esc>
 
 nnoremap [c :action VcsShowPrevChangeMarker<cr>
 nnoremap ]c :action VcsShowNextChangeMarker<cr>
@@ -50,5 +52,7 @@ nnoremap ZZ :action CloseActiveTab<cr>
 
 inoremap <c-a> <c-o>^
 inoremap <c-e> <End>
+inoremap <c-b> <c-o>b
+inoremap <c-f> <c-o>l
 
 nnoremap <leader>n :nohlsearch<cr>
