@@ -56,3 +56,4 @@ inoremap <c-b> <c-o>b
 inoremap <c-f> <c-o>l
 
 nnoremap <leader>n :nohlsearch<cr>
+set ideajoin
