@@ -10,6 +10,8 @@
 	excludesfile = ~/.my-config/git/excludes
 	editor = nvim -f
 	autocrlf = input
+	untrackedCache = true
+	fsmonitor = true
 [alias]
 	ll = log --stat
 	last = log --stat -1
