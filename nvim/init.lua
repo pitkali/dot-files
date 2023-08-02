@@ -105,6 +105,12 @@ cmp.setup.filetype('gitcommit', {
   })
 })
 
+cmp.setup.filetype('norg', {
+  sources = cmp.config.sources({}, {
+    { name = 'neorg' },
+  })
+})
+
 -- Use buffer source for `/`
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),

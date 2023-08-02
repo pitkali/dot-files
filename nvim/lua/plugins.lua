@@ -47,6 +47,31 @@ packer.startup(function(use)
   use 'junegunn/vim-journal'
   use 'neovimhaskell/haskell-vim'
   use {
+    'nvim-neorg/neorg',
+    config = function()
+      require('neorg').setup {
+        load = {
+          ['core.defaults'] = {}, -- Loads default behaviour
+          ['core.concealer'] = {}, -- Adds pretty icons to your documents
+          ['core.dirman'] = { -- Manages Neorg workspaces
+          config = {
+            workspaces = {
+              notes = '~/notes',
+            },
+          },
+          ['core.completion'] = {
+            config = {
+              engine = 'nvim-cmp',
+            }
+          },
+        },
+      },
+    }
+    end,
+    run = ':Neorg sync-parsers',
+    requires = 'nvim-lua/plenary.nvim',
+  }
+  use {
     'preservim/tagbar',
     config = function()
       vim.g.tagbar_autofocus = 1
