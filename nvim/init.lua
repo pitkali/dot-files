@@ -48,7 +48,7 @@ end, opts)
 vim.keymap.set('n', ' dq', function()
   vim.o.wrap = not vim.o.wrap
 end, opts)
-vim.keymap.set('n', ' c', ':nohlsearch', opts)
+vim.keymap.set('n', ' c', ':nohlsearch<CR>', opts)
 vim.keymap.set('n', ' r', ':e %<CR>', opts)
 vim.keymap.set('n', ' w', ':w<CR>', opts)
 vim.keymap.set('i', '<C-a>', '<C-o>^', opts)
