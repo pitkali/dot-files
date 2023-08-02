@@ -156,6 +156,10 @@ export FZF_ALT_C_COMMAND="fd -L . --min-depth 1 -td"
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
 
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
 # Some fancy shell improvements.
 source $localdir/zsh-autosuggestions/zsh-autosuggestions.zsh
 
