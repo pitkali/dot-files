@@ -30,3 +30,5 @@
 	default = upstream
 [mergetool "vimdiff"]
 	path = nvim
+[mergetool]
+	hideResolved = true
