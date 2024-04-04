@@ -23,10 +23,25 @@ vim.o.list = true
 vim.g.mapleader = ' '
 vim.g.maplocalleader = '\\'
 
-require('plugins')
+vim.g.sexp_filetypes = 'scheme,lisp,clojure,dune'
 
 local api = vim.api
 local fn = vim.fn
+
+local lazypath = fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+require('lazy').setup('plugins')
 
 -- Toggle between 2 different listchars sections.
 local function toggle_listchars(v1, v2)
@@ -63,103 +78,6 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
 vim.keymap.set('n', '\\q', vim.diagnostic.setloclist, opts)
 
 vim.keymap.set('n', ' gm', '<Plug>(git-messenger)', opts)
-
-local telescope = require('telescope')
-telescope.setup()
-telescope.load_extension('fzf')
-
-local tele_builtin = require('telescope.builtin')
-vim.keymap.set('n', ' e', tele_builtin.find_files, opts)
-vim.keymap.set('n', ' ff', tele_builtin.live_grep, opts)
-vim.keymap.set('n', ' fg', tele_builtin.grep_string, opts)
-vim.keymap.set('n', ' fb', tele_builtin.buffers, opts)
-vim.keymap.set('n', '<f2>', tele_builtin.buffers, opts)
-vim.keymap.set('n', ' fh', tele_builtin.help_tags, opts)
-vim.keymap.set('n', '<C-p>', tele_builtin.oldfiles, opts)
-
-local cmp = require('cmp')
-
-cmp.setup({
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
-  mapping = cmp.mapping.preset.insert({
-    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-g>'] = cmp.mapping.abort(),
-    -- ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  }),
-  sources = cmp.config.sources({
-    { name = 'nvim_lsp' },
-  }, {
-    { name = 'buffer' },
-  })
-})
-
--- Set configuration for specific filetype.
-cmp.setup.filetype('gitcommit', {
-  sources = cmp.config.sources({}, {
-    { name = 'buffer' },
-  })
-})
-
-cmp.setup.filetype('norg', {
-  sources = cmp.config.sources({}, {
-    { name = 'neorg' },
-  })
-})
-
--- Use buffer source for `/`
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' }
-  }
-})
-
--- Use cmdline & path source for ':'
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' }
-  }, {
-    { name = 'cmdline' }
-  })
-})
-
--- Setup lspconfig.
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
--- Use an on_attach function to only map the following keys
--- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Mappings.
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '\\wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '\\wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '\\wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '\\D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '\\rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '\\ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '\\f', vim.lsp.buf.formatting, bufopts)
-end
-
-local lspconfig = require('lspconfig')
-lspconfig.vimls.setup{ on_attach = on_attach }
-lspconfig.rust_analyzer.setup{ on_attach = on_attach }
-lspconfig.pyright.setup{ on_attach = on_attach }
-lspconfig.gopls.setup{ on_attach = on_attach }
-lspconfig.clangd.setup{ on_attach = on_attach }
 
 api.nvim_create_autocmd('FileType', {
   pattern = 'text',
