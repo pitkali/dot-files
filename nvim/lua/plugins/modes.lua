@@ -12,9 +12,5 @@ return {
     'ocaml/vim-ocaml',
     ft = { 'ocaml', 'dune', 'opam', 'oasis', 'omake', 'ocamlbuild_tags', 'sexplib' }
   },
-  {
-    'fsharp/vim-fsharp',
-    build = 'make fsautocomplete',
-    ft = 'fsharp'
-  },
+  { 'ionide/ionide-vim', ft = 'fsharp' },
 }
