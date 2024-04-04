@@ -27,6 +27,7 @@ alias ke="killall `basename $EMACS`"
 alias rvim="gvim --remote"
 
 alias ls='ls --color=auto'
+alias lg='lazygit'
 
 bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
