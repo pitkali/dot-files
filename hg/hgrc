@@ -1,34 +1,24 @@
 [ui]
 username = Piotr Kalinowski <pitkali@gmail.com>
 ignore = ~/.my-config/hg/ignore
+interface = curses
 
 [extensions]
-progress =
-record =
-shelve =
 rebase =
-color =
-pager =
-
-graphlog =
 purge =
 relink =
-transplant =
 histedit =
-
 schemes =
-convert =
+evolve =
+hggit =
+
+[merge-tools]
+vimdiff.executable = nvim
+vimdiff.args = -f -d $output -M $local $base $other -c "wincmd J" -c "set modifiable" -c "set write"
+vimdiff.premerge = keep
 
 [hostsecurity]
 bitbucket.org:fingerprints=sha256:32:12:90:9a:70:64:82:1c:5b:52:cc:c3:0a:d0:79:db:e1:a8:62:1b:9a:9a:4c:f4:72:40:1c:a7:3a:d3:0a:8c
-
-[color]
-qseries.applied = green bold
-qseries.unapplied = magenta bold
-
-[pager]
-pager = less
-attend = annotate, cat, diff, export, glog, log, qdiff, help
 
 [schemes]
 gh = git+https://github.com/
