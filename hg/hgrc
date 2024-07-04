@@ -2,15 +2,20 @@
 username = Piotr Kalinowski <pitkali@gmail.com>
 ignore = ~/.my-config/hg/ignore
 interface = curses
+tweakdefaults = true
 
 [extensions]
-rebase =
-purge =
-relink =
-histedit =
-schemes =
-evolve =
-hggit =
+rebase = 
+purge = 
+relink = 
+histedit = 
+schemes = 
+evolve = 
+hggit = 
+absorb = 
+fsmonitor = 
+shelve = 
+show = 
 
 [merge-tools]
 vimdiff.executable = nvim
@@ -22,3 +27,31 @@ bitbucket.org:fingerprints=sha256:32:12:90:9a:70:64:82:1c:5b:52:cc:c3:0a:d0:79:d
 
 [schemes]
 gh = git+https://github.com/
+
+[diff]
+git = true
+showfunc = true
+
+[rebase]
+experimental.inmemory = yes
+
+[alias]
+wip = log --graph --rev=wip --template=wip
+
+[revsetalias]
+wip = (parents(not public()) or not public() or . or (head() and branch(default))) and (not obsolete() or orphan()^) and not closed()
+
+[templates]
+wip = '{label("wip.branch", if(branches,"{branches} "))}{label(ifeq(graphnode,"x","wip.obsolete","wip.{phase}"),"{rev}:{node|short}")}{label("wip.user", " {author|user}")}{label("wip.tags", if(tags," {tags}"))}{label("wip.tags", if(fxheads," {fxheads}"))}{if(bookmarks," ")}{label("wip.bookmarks", if(bookmarks,bookmarks))}{label(ifcontains(rev, revset("parents()"), "wip.here"), " {desc|firstline}")}'
+[color]
+wip.bookmarks = yellow underline
+wip.branch = yellow
+wip.draft = green
+wip.here = red
+wip.obsolete = none
+wip.public = blue
+wip.tags = yellow
+wip.user = magenta
+
+[experimental]
+graphshorten = true
