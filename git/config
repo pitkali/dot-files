@@ -15,21 +15,41 @@
 [alias]
 	ll = log --stat
 	last = log --stat -1
+	st = status
+[branch]
+	sort = -committerdate
 [color]
 	ui = auto
 	pager = true
+[column]
+	ui = auto
 [diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
 	renames = true
-	tool = gvimdiff
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
 [gui]
 	spellingdictionary = en_GB
 	fontui = -family Helvetica -size 14 -weight normal -slant roman -underline 0 -overstrike 0
 	fontdiff = -family Consolas -size 14 -weight normal -slant roman -underline 0 -overstrike 0
 [merge]
 	tool = vimdiff
-	conflictstyle = diff3
+	conflictstyle = zdiff3
 [push]
 	default = upstream
+[rebase]
+	autoSquash = true
+	autoStash = true
+	updateRefs = true
+[rerere]
+	enabled = true
+	autoupdate = true
+[tag]
+	sort = version:refname
 [mergetool "vimdiff"]
 	path = nvim
 [mergetool]
