@@ -48,6 +48,8 @@ nnoremap ]e :action GotoNextError<cr>
 nnoremap [e :action GotoPreviousError<cr>
 
 nnoremap <leader>w :action SaveAll<cr>
+nnoremap <leader>e :action GotoFile<cr>
+nnoremap <leader>o :action GotoSymbol<cr>
 nnoremap ZZ :action CloseActiveTab<cr>
 
 inoremap <c-a> <c-o>^
