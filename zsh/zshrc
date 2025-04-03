@@ -183,3 +183,7 @@ source $localdir/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 autoload -Uz compinit
 compinit
+
+if [[ -x `which jj` ]]; then
+    source <(jj util completion zsh)
+fi
