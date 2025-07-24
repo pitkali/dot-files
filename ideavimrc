@@ -6,6 +6,7 @@ set ignorecase smartcase
 set showmode
 set surround
 set easymotion
+set ReplaceWithRegister
 
 inoremap jj <Esc>
 vnoremap jk <Esc>
