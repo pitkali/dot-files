@@ -93,6 +93,7 @@ return {
   { 'vim-scripts/CountJump' },
   { 'vim-scripts/ConflictDetection' },
   { 'vim-scripts/ConflictMotions', dependencies = { 'CountJump' } },
+  { 'vim-scripts/ReplaceWithRegister' },
   { 'regedarek/ZoomWin' },
   { 'vim-syntastic/syntastic' },
   { 'lewis6991/gitsigns.nvim', config = true },
