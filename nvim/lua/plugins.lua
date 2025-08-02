@@ -98,4 +98,5 @@ return {
   { 'vim-syntastic/syntastic' },
   { 'lewis6991/gitsigns.nvim', config = true },
   { 'rhysd/git-messenger.vim', cmd = 'GitMessenger', keys = '<Plug>(git-messenger', },
+  { 'Raku/vim-raku' },
 }
