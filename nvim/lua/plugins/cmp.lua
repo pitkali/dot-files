@@ -2,38 +2,12 @@ return {
   { 'hrsh7th/cmp-nvim-lsp' },
   {
     'neovim/nvim-lspconfig',
-    dependencies = { 'cmp-nvim-lsp' },
     config = function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      -- Use an on_attach function to only map the following keys
-      -- after the language server attaches to the current buffer
-      local on_attach = function(client, bufnr)
-        -- Mappings.
-        local bufopts = { noremap=true, silent=true, buffer=bufnr }
-        vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-        vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-        vim.keymap.set('n', '\\wa', vim.lsp.buf.add_workspace_folder, bufopts)
-        vim.keymap.set('n', '\\wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-        vim.keymap.set('n', '\\wl', function()
-          print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-        end, bufopts)
-        vim.keymap.set('n', '\\D', vim.lsp.buf.type_definition, bufopts)
-        vim.keymap.set('n', '\\rn', vim.lsp.buf.rename, bufopts)
-        vim.keymap.set('n', '\\ca', vim.lsp.buf.code_action, bufopts)
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-        vim.keymap.set('n', '\\f', vim.lsp.buf.format, bufopts)
-      end
-
-      local lspconfig = require('lspconfig')
-      lspconfig.vimls.setup{ on_attach = on_attach }
-      lspconfig.rust_analyzer.setup{ on_attach = on_attach }
-      lspconfig.pyright.setup{ on_attach = on_attach }
-      lspconfig.gopls.setup{ on_attach = on_attach }
-      lspconfig.clangd.setup{ on_attach = on_attach }
+      vim.lsp.enable('vimls')
+      vim.lsp.enable('rust_analyzer')
+      vim.lsp.enable('pyright')
+      vim.lsp.enable('gopls')
+      vim.lsp.enable('clangd')
     end
   },
   { 'hrsh7th/cmp-buffer' },
