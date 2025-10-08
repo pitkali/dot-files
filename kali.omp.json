@@ -28,6 +28,17 @@
           "style": "powerline"
         },
         {
+          "type": "jujutsu",
+          "style": "powerline",
+          "powerline_symbol": "\ue0b0",
+          "foreground": "#193549",
+          "background": "#ffeb3b",
+          "properties": {
+            "fetch_status": true
+          },
+          "template": " jj {{.ChangeID}}{{if .Working.Changed}} \uf044 {{ .Working.String }}{{ end }} "
+        },
+        {
           "properties": {
             "branch_icon": "\uf126 ",
             "fetch_stash_count": true,
