@@ -36,3 +36,5 @@ alias lg='lazygit'
 
 bindkey "^[[1;5D" backward-word
 bindkey "^[[1;5C" forward-word
+
+export GTK_IM_MODULE=ibus
