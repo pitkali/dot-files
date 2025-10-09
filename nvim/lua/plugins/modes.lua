@@ -1,6 +1,5 @@
 return {
   { 'neovimhaskell/haskell-vim' },
-  { 'preservim/vim-markdown' },
   { 'PProvost/vim-ps1' },
   { 'rust-lang/rust.vim' },
   { 'ekalinin/Dockerfile.vim', ft = 'Dockerfile' },
