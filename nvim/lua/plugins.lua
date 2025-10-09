@@ -1,5 +1,13 @@
 return {
-  { "phha/zenburn.nvim", priority = 1000, config = true },
+  {
+    "jnurmine/Zenburn",
+    priority = 1000,
+    init = function ()
+      vim.o.background = "dark"
+      vim.g.zenburn_high_Contrast = 1
+      vim.cmd([[colorscheme zenburn]])
+    end
+  },
 
   -- Better icons
   {
@@ -13,7 +21,7 @@ return {
     event = 'VimEnter',
     opts = {
       options = {
-        theme = 'zenburn',
+        theme = 'moonfly',
       }
     },
     dependencies = { 'nvim-web-devicons' },
