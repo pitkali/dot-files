@@ -46,6 +46,7 @@ return {
     }
   },
   { 'junegunn/goyo.vim' },
+  { 'junegunn/vim-easy-align' },
   { 'junegunn/vim-journal' },
   {
     "nvim-neorg/neorg",
