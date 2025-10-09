@@ -1,6 +1,5 @@
 return {
   { "phha/zenburn.nvim", priority = 1000, config = true },
-  { "vhyrro/luarocks.nvim", priority = 1000, config = true },
 
   -- Better icons
   {
@@ -42,7 +41,6 @@ return {
   { 'junegunn/vim-journal' },
   {
     "nvim-neorg/neorg",
-    dependencies = { "luarocks.nvim" },
     lazy = false,
     version = "*",
     config = true,
