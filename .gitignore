@@ -3,3 +3,4 @@ zsh/compiled/
 lib/guestrepo/
 nvim/plugin/packer_compiled.lua
 nvim/lazy-lock.json
+/kali.omp.json.bak
