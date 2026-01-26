@@ -15,7 +15,7 @@
           "style": "diamond"
         },
         {
-          "properties": {
+          "options": {
             "home_icon": "~",
             "max_depth": 3,
             "style": "agnoster_short"
@@ -28,18 +28,18 @@
           "style": "powerline"
         },
         {
-          "type": "jujutsu",
-          "style": "powerline",
-          "powerline_symbol": "\ue0b0",
-          "foreground": "#193549",
-          "background": "#ffeb3b",
-          "properties": {
+          "options": {
             "fetch_status": true
           },
-          "template": " jj {{.ChangeID}}{{if .Working.Changed}} \uf044 {{ .Working.String }}{{ end }} "
+          "template": " jj {{.ChangeID}}{{if .Working.Changed}} \uf044 {{ .Working.String }}{{ end }} ",
+          "foreground": "#193549",
+          "powerline_symbol": "\ue0b0",
+          "background": "#ffeb3b",
+          "type": "jujutsu",
+          "style": "powerline"
         },
         {
-          "properties": {
+          "options": {
             "branch_icon": "\uf126 ",
             "fetch_stash_count": true,
             "fetch_status": true,
@@ -59,7 +59,7 @@
           ]
         },
         {
-          "properties": {
+          "options": {
             "fetch_status": true
           },
           "template": " hg {{.Branch}} {{if .LocalCommitNumber}}({{.LocalCommitNumber}}:{{.ChangeSetIDShort}}){{end}}{{range .Bookmarks }} \uf02e {{.}}{{end}}{{range .Tags}} \uf02b {{.}}{{end}}{{if .Working.Changed}} \uf044 {{ .Working.String }}{{ end }}",
@@ -79,7 +79,7 @@
       "alignment": "right",
       "segments": [
         {
-          "properties": {
+          "options": {
             "fetch_version": true
           },
           "template": " {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} \uf898 ",
@@ -91,7 +91,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "fetch_version": true
           },
           "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} \ue627 ",
@@ -103,7 +103,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "fetch_version": true
           },
           "template": " {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} \ue624 ",
@@ -115,7 +115,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "display_mode": "files",
             "fetch_version": true,
             "fetch_virtual_env": false
@@ -129,7 +129,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "display_mode": "files",
             "fetch_version": true
           },
@@ -142,7 +142,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "display_mode": "files",
             "fetch_version": false
           },
@@ -155,7 +155,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "display_default": false
           },
           "template": " {{ .Profile }}{{ if .Region }}@{{ .Region }}{{ end }} \ue7ad ",
@@ -170,7 +170,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "root_icon": "\uf0ad"
           },
           "template": " \uf0e7 ",
@@ -191,7 +191,7 @@
           "invert_powerline": true
         },
         {
-          "properties": {
+          "options": {
             "always_enabled": true
           },
           "template": " {{ if gt .Code 0 }}{{ .Meaning }}{{ else }}✔{{ end }} ",
@@ -241,6 +241,6 @@
       ]
     }
   ],
-  "version": 3,
+  "version": 4,
   "final_space": true
 }
