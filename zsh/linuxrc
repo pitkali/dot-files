@@ -20,17 +20,6 @@ fi
 
 export HOMEBREW_NO_ENV_HINTS=1
 
-export EMACS=`which emacs`
-export EMACSCLIENT=`which emacsclient`
-
-alias oem="$EMACSCLIENT -n -a $EMACS"
-alias em="$EMACS"
-alias ecs="$EMACS --daemon"
-alias ec="$EMACSCLIENT -a $EMACS"
-alias ke="killall `basename $EMACS`"
-
-alias rvim="gvim --remote"
-
 alias ls='ls --color=auto'
 alias lg='lazygit'
 
