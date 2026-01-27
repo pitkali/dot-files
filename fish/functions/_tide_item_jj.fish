@@ -1,10 +1,9 @@
 function _tide_item_jj
-  if jj log -r@ --no-graph --ignore-working-copy -T 'change_id.shortest()' 2>/dev/null | read -f change_id
-  else if test $pipestatus[1] != 0
+  if not jj log -r@ -n1 --no-graph --ignore-working-copy -T 'change_id.shortest()' 2>/dev/null | read -f change_id
     return
   end
 
-  set -l stat (jj log -r@ --no-graph --ignore-working-copy -T 'diff.files().map(|i| i.status_char()).join("\n")' 2>/dev/null)
+  set -l stat (jj log -r@ -n1 --no-graph --ignore-working-copy -T 'diff.files().map(|i| i.status_char()).join("\n")' 2>/dev/null)
   string match -qr '(0|(?<added>.*))\n(0|(?<modified>.*))\n(0|(?<removed>.*))\n(0|(?<renamed>.*))' \
     "$(string match A $stat | count
        string match M $stat | count
