@@ -15,5 +15,6 @@ diff-formatter = ["difft", "--color=always", "$left", "$right"]
 
 [aliases]
 tug = ["bookmark", "move", "--from", "heads(::@ & bookmarks())", "--to", "closest_pushable(@)"]
-ll = ["log", "-r", "ancestors(@, 10)"]
+ll = ["log", "-r", "ancestors(@, 20)"]
+up = ["git", "fetch"]
 
